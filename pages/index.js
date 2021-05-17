@@ -1,65 +1,122 @@
-import Head from 'next/head'
-import styles from '../styles/Home.module.css'
+import { Form, Select, InputNumber, Switch, Slider, Button } from 'antd';
+import DatePicker from '../components/date-picker';
+import { SmileFilled } from '@ant-design/icons';
+import { useGenres } from '../context/genre-context';
+import { GenreList } from '../components/genre-list';
+
+import Link from 'next/link';
+
+const FormItem = Form.Item;
+const Option = Select.Option;
+
+const content = {
+  marginTop: '100px'
+};
+
+const SAMPLEDATA = [
+  'Racing car sprays burning fuel into crowd.',
+  'Japanese princess to wed commoner.',
+  'Australian walks 100km after outback crash.',
+  'Man charged over missing wedding girl.',
+  'Los Angeles battles huge wildfires.'
+];
 
 export default function Home() {
+  const { genres, setGenres, isLoading } = useGenres();
+
   return (
-    <div className={styles.container}>
-      <Head>
-        <title>Create Next App</title>
-        <link rel="icon" href="/favicon.ico" />
-      </Head>
-
-      <main className={styles.main}>
-        <h1 className={styles.title}>
-          Welcome to <a href="https://nextjs.org">Next.js!</a>
-        </h1>
-
-        <p className={styles.description}>
-          Get started by editing{' '}
-          <code className={styles.code}>pages/index.js</code>
-        </p>
-
-        <div className={styles.grid}>
-          <a href="https://nextjs.org/docs" className={styles.card}>
-            <h3>Documentation &rarr;</h3>
-            <p>Find in-depth information about Next.js features and API.</p>
+    <div style={content}>
+      <div className="text-center mb-5">
+        <Link href="#">
+          <a className="logo mr-0">
+            <SmileFilled size={48} strokeWidth={1} />
           </a>
+        </Link>
 
-          <a href="https://nextjs.org/learn" className={styles.card}>
-            <h3>Learn &rarr;</h3>
-            <p>Learn about Next.js in an interactive course with quizzes!</p>
-          </a>
-
-          <a
-            href="https://github.com/vercel/next.js/tree/master/examples"
-            className={styles.card}
-          >
-            <h3>Examples &rarr;</h3>
-            <p>Discover and deploy boilerplate example Next.js projects.</p>
-          </a>
-
-          <a
-            href="https://vercel.com/import?filter=next.js&utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-            className={styles.card}
-          >
-            <h3>Deploy &rarr;</h3>
-            <p>
-              Instantly deploy your Next.js site to a public URL with Vercel.
-            </p>
-          </a>
+        <p className="mb-0 mt-3 text-disabled">Welcome to the world !</p>
+      </div>
+      {genres && (
+        <div>
+          <pre>{JSON.stringify(genres, null, 2)}</pre>
         </div>
-      </main>
+      )}
 
-      <footer className={styles.footer}>
-        <a
-          href="https://vercel.com?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Powered by{' '}
-          <img src="/vercel.svg" alt="Vercel Logo" className={styles.logo} />
-        </a>
-      </footer>
+      <div>
+        <GenreList displayTitle="Stuff" items={SAMPLEDATA} />
+      </div>
+      <div>
+        <Form layout="horizontal">
+          <FormItem
+            label="Input Number"
+            labelCol={{ span: 8 }}
+            wrapperCol={{ span: 8 }}
+          >
+            <InputNumber
+              size="large"
+              min={1}
+              max={10}
+              style={{ width: 100 }}
+              defaultValue={3}
+              name="inputNumber"
+            />
+          </FormItem>
+
+          <FormItem
+            label="Switch"
+            labelCol={{ span: 8 }}
+            wrapperCol={{ span: 8 }}
+          >
+            <Switch defaultChecked name="switch" />
+          </FormItem>
+
+          <FormItem
+            label="Slider"
+            labelCol={{ span: 8 }}
+            wrapperCol={{ span: 8 }}
+          >
+            <Slider defaultValue={70} />
+          </FormItem>
+
+          <FormItem
+            label="Select"
+            labelCol={{ span: 8 }}
+            wrapperCol={{ span: 8 }}
+          >
+            <Select
+              size="large"
+              defaultValue="lucy"
+              style={{ width: 192 }}
+              name="select"
+            >
+              <Option value="jack">jack</Option>
+              <Option value="lucy">lucy</Option>
+              <Option value="disabled" disabled>
+                disabled
+              </Option>
+              <Option value="yiminghe">yiminghe</Option>
+            </Select>
+          </FormItem>
+
+          <FormItem
+            label="DatePicker"
+            labelCol={{ span: 8 }}
+            wrapperCol={{ span: 8 }}
+          >
+            <DatePicker name="startDate" />
+          </FormItem>
+          <FormItem
+            style={{ marginTop: 48 }}
+            wrapperCol={{ span: 8, offset: 8 }}
+          >
+            <Button size="large" type="primary" htmlType="submit">
+              OK
+            </Button>
+            <Button size="large" style={{ marginLeft: 8 }}>
+              Cancel
+            </Button>
+          </FormItem>
+        </Form>
+      </div>
     </div>
-  )
+  );
 }
