@@ -15,12 +15,12 @@ export const GenreSummary = () => {
   } = useGenres();
 
   return (
-    <div style={{ padding: '15px' }}>
-      <Row style={{ justifyContent: 'center' }}>
+    <div className="light-body-bg">
+      <Row style={{ justifyContent: 'center' }} gutter={[16, 16]}>
         <Typography.Title level={3}>In Progress: {wip}</Typography.Title>
       </Row>
       <Divider orientation="left">Other Genres</Divider>
-      <Row>
+      <Row gutter={[16, 16]}>
         <Col className="gutter-row" span={8}>
           <div style={style}>
             <GenreList displayTitle={'Available'} items={availableGenres} />

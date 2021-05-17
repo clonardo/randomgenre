@@ -203,3 +203,17 @@ body {
   margin-left: auto !important;
   align-items: center;
 }
+
+.ant-layout-content {
+  background: #001529;
+  min-height: 100vh;
+}
+
+.light-body-bg {
+  background: white;
+  padding: '15px';
+}
+
+.signin-box{
+  margin-top: 100px;
+}

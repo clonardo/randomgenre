@@ -5,6 +5,7 @@ import { UserOutlined } from '@ant-design/icons';
 import GenreCtx, { useGenres } from '../../context/genre-context';
 import { GenreSummary } from '../../containers/genre-summary';
 const { SubMenu } = Menu;
+const { Content } = Layout;
 
 const ShowUserId = () => {
   const userId = useUserId();
@@ -50,14 +51,14 @@ export default function Profile() {
 
   return session ? (
     <GenreCtx>
-      <main>
-        <ProfileHeader
-          avatarUrl={session?.user?.image}
-          userName={session?.user?.name}
-          userId={userId}
-        />
+      <ProfileHeader
+        avatarUrl={session?.user?.image}
+        userName={session?.user?.name}
+        userId={userId}
+      />
+      <Content style={{ padding: '0 50px' }}>
         <GenreSummary />
-      </main>
+      </Content>
     </GenreCtx>
   ) : (
     <div>Loading..</div>
