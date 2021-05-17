@@ -1,0 +1,56 @@
+export enum GenreNames {
+  'Architecture' = 'Architecture',
+  'Astro' = 'Astro',
+  'Automotive' = 'Automotive',
+  'B&W' = 'B&W',
+  'Documentary' = 'Documentary',
+  'Drone' = 'Drone',
+  'Event' = 'Event',
+  'Fashion' = 'Fashion',
+  'Film' = 'Film',
+  'Landscapes' = 'Landscapes',
+  'Macro' = 'Macro',
+  'Misc' = 'Misc',
+  'Nature' = 'Nature',
+  'Pets' = 'Pets',
+  'Planes' = 'Planes',
+  'Portraits' = 'Portraits',
+  'Products & Food' = 'Products & Food',
+  'Sports' = 'Sports',
+  'Street' = 'Street',
+  'Studio & Lighting' = 'Studio & Lighting',
+  'Trains' = 'Trains',
+  'Travel' = 'Travel',
+  'Urban Exploration' = 'Urban Exploration',
+  'Wildlife' = 'Wildlife'
+}
+
+/**
+ * Array of all valid genre enums
+ */
+export const AllGenres: string[] = [
+  GenreNames.Architecture,
+  GenreNames.Astro,
+  GenreNames.Automotive,
+  GenreNames['B&W'],
+  GenreNames.Documentary,
+  GenreNames.Drone,
+  GenreNames.Event,
+  GenreNames.Fashion,
+  GenreNames.Film,
+  GenreNames.Landscapes,
+  GenreNames.Macro,
+  GenreNames.Misc,
+  GenreNames.Nature,
+  GenreNames.Pets,
+  GenreNames.Planes,
+  GenreNames.Portraits,
+  GenreNames['Products & Food'],
+  GenreNames.Sports,
+  GenreNames.Street,
+  GenreNames['Studio & Lighting'],
+  GenreNames.Trains,
+  GenreNames.Travel,
+  GenreNames['Urban Exploration'],
+  GenreNames.Wildlife
+];

@@ -6,7 +6,6 @@ export const GenreList = ({ items, displayTitle }) => {
     <>
       <Divider orientation="left">{displayTitle}</Divider>
       <List
-        header={<div>!!Header!!</div>}
         bordered
         dataSource={items}
         renderItem={(item) => <List.Item>{item}</List.Item>}
