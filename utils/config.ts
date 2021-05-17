@@ -25,7 +25,7 @@ export const config = {
   cookieName: 'token',
   clientId: validateEnv('DISCORD_CLIENT_ID'),
   clientSecret: validateEnv('DISCORD_CLIENT_SECRET'),
-  appUri: validateEnv('DISCORD_URL_BASE', 'http://localhost:3000', true),
+  appUri: validateEnv('NEXTAUTH_URL', 'http://localhost:3000', true),
   jwtSecret: validateEnv(
     'JWT_SECRET',
     'this is a development value that should be changed in production!!!!!',

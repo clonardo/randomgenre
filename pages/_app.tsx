@@ -8,7 +8,7 @@ import type { AppProps } from 'next/app';
 // `useSession()` anywhere in your application to access the `session` object.
 export default function App({ Component, pageProps }: AppProps) {
   return (
-    <Provider>
+    <Provider session={pageProps.session}>
       <Component {...pageProps} />
     </Provider>
   );

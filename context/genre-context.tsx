@@ -1,12 +1,22 @@
 import { useState, useEffect, createContext, useContext } from 'react';
 import firebase from '../firebase/client-app';
+import { IGenreStates, IGenreContext } from '../utils/types';
+import { useUserId } from '../hooks/use-userid';
+import { cloneDeep } from 'lodash';
 
-export const GenreContext = createContext();
+const INITIAL_STATE: IGenreStates = { wip: 'none', completed: [], skipped: [] };
 
-const INITIAL_STATE = { wip: 'none', completed: [], skipped: [] };
+export const GenreContext = createContext<IGenreContext>({
+  genres: INITIAL_STATE,
+  setGenres: (value: IGenreStates) => {
+    return;
+  },
+  isLoading: true
+});
 
-export default function GenreContextComp({ children, targetId }) {
-  const [genres, setGenres] = useState(INITIAL_STATE);
+export default function GenreContextComp({ children }) {
+  const userId = useUserId();
+  const [genres, setGenres] = useState<IGenreStates>(INITIAL_STATE);
   // for UI state only
   const [isLoading, setIsLoading] = useState(true);
 
@@ -14,22 +24,33 @@ export default function GenreContextComp({ children, targetId }) {
   const ref = firebase.firestore().collection('genres');
 
   useEffect(() => {
-    console.log(`Context got targetID: ${targetId}`);
+    console.log(`Context got targetID: ${userId}`);
     setIsLoading(true);
 
     ref
-      .doc(targetId)
+      .doc(userId)
       .get()
       .then((item) => {
         const res = item.data();
-        if(res){
-            console.log('-- got item: ');
-            console.log(res);
+        if (res) {
+          console.log('-- got item: ');
+          console.log(res);
+          setIsLoading(false);
+          setGenres(res as any);
+        } else {
+          // need to create a new DB entry
+          ref
+            .doc(userId)
+            .set(cloneDeep(INITIAL_STATE))
+            .then(() => {
+              setIsLoading(false);
+            })
+            .catch((error) => {
+              console.warn('Failed to create new DB entry: ', error);
+              setIsLoading(false);
+            });
         }
-        else{
 
-        }
-        
         /*
         const itemLength =
           item && item.docs && item.docs.length ? item.docs.length : -1;
@@ -56,27 +77,7 @@ export default function GenreContextComp({ children, targetId }) {
       //   });
     });
     */
-
-    // Listen authenticated user
-    // const unsubscriber = firebase.auth().onAuthStateChanged(async (user) => {
-    //     try {
-    //       if (user) {
-    //         // User is signed in.
-    //         const { uid, displayName, email, photoURL } = user
-    //         // You could also look for the user doc in your Firestore (if you have one):
-    //         // const userDoc = await firebase.firestore().doc(`users/${uid}`).get()
-    //         setUser({ uid, displayName, email, photoURL })
-    //       } else setUser(null)
-    //     } catch (error) {
-    //       // Most probably a connection error. Handle appropriately.
-    //     } finally {
-    //       setLoadingUser(false)
-    //     }
-    //   })
-
-    //   // Unsubscribe auth listener on unmount
-    //   return () => unsubscriber()
-  }, [targetId]);
+  }, [userId]);
 
   return (
     <GenreContext.Provider value={{ genres, setGenres, isLoading }}>
