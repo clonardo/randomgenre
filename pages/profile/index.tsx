@@ -48,20 +48,18 @@ export default function Profile() {
   const [session, loading] = useSession();
   const userId = useUserId();
 
-  return (
+  return session ? (
     <GenreCtx>
       <main>
         <ProfileHeader
-          avatarUrl={session.user?.image}
-          userName={session.user?.name}
+          avatarUrl={session?.user?.image}
+          userName={session?.user?.name}
           userId={userId}
         />
-        {/* <ShowUserId />
-        <div className="aside-footer">
-          <button onClick={(): Promise<void> => signOut()}>Sign out</button>
-        </div> */}
         <GenreSummary />
       </main>
     </GenreCtx>
+  ) : (
+    <div>Loading..</div>
   );
 }
